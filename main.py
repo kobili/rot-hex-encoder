@@ -5,10 +5,11 @@ from io import TextIOWrapper
 from decoder import Decoder
 from encoder import Encoder
 
-assert len(sys.argv) == 2, f"Missing argument(s): Have {len(sys.argv)}, need 3"
+assert len(sys.argv) == 3, f"Missing argument(s): Have {len(sys.argv)}, need 3"
 assert sys.argv[1] in ["unhide", "hide"], "Argument must be one of 'hide' or 'unhide'"
 
 decode_mode = sys.argv[1] == "unhide"
+file_path = sys.argv[2]
 
 ROT_N = 47
 HEX_SEPARATOR = " 263a "
@@ -21,7 +22,7 @@ def overwrite_file(file: TextIOWrapper, new_content):
     file.write(str(new_content))
     file.truncate()
 
-with open("secret.txt", "r+") as file:
+with open(file_path, "r+") as file:
     if decode_mode:
         # expecting a string of space separated hex bytes
         secret = file.read()
