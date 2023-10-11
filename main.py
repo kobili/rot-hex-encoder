@@ -1,6 +1,7 @@
 import sys
 from ast import literal_eval
 from io import TextIOWrapper
+from json import dumps as to_json_string
 
 from decoder import Decoder
 from encoder import Encoder
@@ -26,7 +27,7 @@ with open(file_path, "r+") as file:
     if decode_mode:
         # expecting a string of space separated hex bytes
         secret = file.read()
-        overwrite_file(file, str(decoder.decode_hex_dump(secret)))
+        overwrite_file(file, to_json_string(decoder.decode_hex_dump(secret), indent=4))
     else:
         # expecting a list of strings
         items = literal_eval(file.read())
